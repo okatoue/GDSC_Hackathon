@@ -15,13 +15,6 @@ load_dotenv()
 
 def main():
     try:
-        # example of setting up a client config. logging values: WARNING, VERBOSE, DEBUG, SPAM
-        # config = DeepgramClientOptions(
-        #     verbose=logging.DEBUG,
-        #     options={"keepalive": "true"}
-        # )
-        # deepgram: DeepgramClient = DeepgramClient("", config)
-        # otherwise, use default config
         deepgram = DeepgramClient("c254b94530fcfc64076e6d850f0c61d536ff5098")
 
         dg_connection = deepgram.listen.live.v("1")
@@ -32,20 +25,7 @@ def main():
                 return
             print(f"speaker: {sentence}")
 
-        def on_metadata(self, metadata, **kwargs):
-            print(f"\n\n{metadata}\n\n")
-
-        def on_speech_started(self, speech_started, **kwargs):
-            print(f"\n\n{speech_started}\n\n")
-
-        def on_utterance_end(self, utterance_end, **kwargs):
-            print(f"\n\n{utterance_end}\n\n")
-
-        def on_error(self, error, **kwargs):
-            print(f"\n\n{error}\n\n")
-
         dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
-
 
         options = LiveOptions(
             model="nova-2",
@@ -54,10 +34,6 @@ def main():
             encoding="linear16",
             channels=1,
             sample_rate=16000,
-            # To get UtteranceEnd, the following must be set:
-            interim_results=True,
-            utterance_end_ms="1000",
-            vad_events=True,
         )
         dg_connection.start(options)
 
@@ -77,8 +53,6 @@ def main():
         dg_connection.finish()
 
         print("Finished")
-        # sleep(30)  # wait 30 seconds to see if there is any additional socket activity
-        # print("Really done!")
 
     except Exception as e:
         print(f"Could not open socket: {e}")
