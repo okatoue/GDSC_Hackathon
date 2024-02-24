@@ -45,10 +45,7 @@ def main():
             print(f"\n\n{error}\n\n")
 
         dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
-        dg_connection.on(LiveTranscriptionEvents.Metadata, on_metadata)
-        dg_connection.on(LiveTranscriptionEvents.SpeechStarted, on_speech_started)
-        dg_connection.on(LiveTranscriptionEvents.UtteranceEnd, on_utterance_end)
-        dg_connection.on(LiveTranscriptionEvents.Error, on_error)
+
 
         options = LiveOptions(
             model="nova-2",
