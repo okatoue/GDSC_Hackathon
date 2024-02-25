@@ -16,13 +16,14 @@ load_dotenv()
 def main():
     try:
         deepgram = DeepgramClient("c254b94530fcfc64076e6d850f0c61d536ff5098")
+
         dg_connection = deepgram.listen.live.v("1")
 
         def on_message(self, result, **kwargs):
-            for channel in result.channel.alternatives:   # Iterate through channels
-                for transcript in channel.transcript:  # Iterate over transcripts
-                     for word in transcript.words:       # Iterate over words
-                        print(f"speaker: {word.punctuated_word}")  # Print each word
+            sentence = result.channel.alternatives[0].transcript
+            if len(sentence) == 0:
+                return
+            print(f"speaker: {sentence}")
 
         dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
 
