@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .utils import generate_program_output  # Import your function
+from Deepgram import STT
 
 def index(request):
-    output_data = generate_program_output()
+    output_data = STT()
     context = {'output': output_data}
     return render(request, 'myapp/index.html', context)

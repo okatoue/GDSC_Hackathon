@@ -13,7 +13,7 @@ from deepgram import (
 load_dotenv()
 
 
-def main():
+def STT():
     try:
         deepgram = DeepgramClient("c254b94530fcfc64076e6d850f0c61d536ff5098")
 
@@ -60,4 +60,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    STT()
