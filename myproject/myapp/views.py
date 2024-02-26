@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse,HttpResponseRedirect
-# Create your views here.
+from .Deepgram import STT  # Import your function
 
 def basic(request):
-    return render(request, 'basic.html')
+    output_data = STT()
+    context = {'output': output_data}
+    return render(request, 'basic.html', context)

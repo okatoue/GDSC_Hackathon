@@ -12,18 +12,19 @@ from deepgram import (
 
 load_dotenv()
 
-
 def STT():
     try:
         deepgram = DeepgramClient("c254b94530fcfc64076e6d850f0c61d536ff5098")
 
         dg_connection = deepgram.listen.live.v("1")
 
+        transcript = ""
+
         def on_message(self, result, **kwargs):
+            nonlocal transcript  # Allow modification of transcript
             sentence = result.channel.alternatives[0].transcript
-            if len(sentence) == 0:
-                return
-            print(f"speaker: {sentence}")
+            if sentence:  # Check if sentence is not empty 
+                transcript += sentence + " "
 
         dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
 
@@ -53,6 +54,7 @@ def STT():
         dg_connection.finish()
 
         print("Finished")
+        return transcript
 
     except Exception as e:
         print(f"Could not open socket: {e}")
