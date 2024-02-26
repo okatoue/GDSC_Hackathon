@@ -1,30 +1,21 @@
 from dotenv import load_dotenv
 import logging, verboselogs
 from time import sleep
-
-from deepgram import (
-    DeepgramClient,
-    DeepgramClientOptions,
-    LiveTranscriptionEvents,
-    LiveOptions,
-    Microphone,
-)
+from deepgram import (DeepgramClient, DeepgramClientOptions, LiveTranscriptionEvents, LiveOptions, Microphone)
 
 load_dotenv()
 
-def STT():
+def main():
     try:
         deepgram = DeepgramClient("c254b94530fcfc64076e6d850f0c61d536ff5098")
 
         dg_connection = deepgram.listen.live.v("1")
 
-        transcript = ""
-
         def on_message(self, result, **kwargs):
-            nonlocal transcript  # Allow modification of transcript
             sentence = result.channel.alternatives[0].transcript
-            if sentence:  # Check if sentence is not empty 
-                transcript += sentence + " "
+            if len(sentence) == 0:
+                return
+            print(f"speaker: {sentence}")
 
         dg_connection.on(LiveTranscriptionEvents.Transcript, on_message)
 
@@ -54,7 +45,6 @@ def STT():
         dg_connection.finish()
 
         print("Finished")
-        return transcript
 
     except Exception as e:
         print(f"Could not open socket: {e}")
@@ -62,4 +52,4 @@ def STT():
 
 
 if __name__ == "__main__":
-    STT()
+    main()
