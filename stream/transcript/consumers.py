@@ -1,14 +1,28 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from dotenv import load_dotenv
 from deepgram import Deepgram
 from typing import Dict
-from translate import Translator
+from googletrans import Translator
 
 import os
 
+class MyConsumer(AsyncJsonWebsocketConsumer):
+    async def connect(self):
+        await self.accept()
+
+    async def disconnect(self, close_code):
+        pass
+
+    async def receive_json(self, content, **kwargs):
+        dropdown1_value = content['dropdown1']
+        dropdown2_value = content['dropdown2']
+        print(dropdown1_value)
+        print(dropdown2_value)
+
 load_dotenv()
 
-translator= Translator(to_lang="ar")
+translator = Translator()
 
 class TranscriptConsumer(AsyncWebsocketConsumer):
    dg_client = Deepgram(os.getenv('DEEPGRAM_API_KEY'))
@@ -18,7 +32,7 @@ class TranscriptConsumer(AsyncWebsocketConsumer):
             transcript = data['channel']['alternatives'][0]['transcript']
             if transcript:
                 print(transcript)
-                transcript = translator.translate(transcript)
+                transcript = translator.translate(transcript, src="tr", dest="ar").text
                 print(transcript)
                 await self.send(transcript)
 
