@@ -31,7 +31,7 @@ load_dotenv()
 translator = Translator()
 
 class TranscriptConsumer(AsyncWebsocketConsumer):
-   dg_client = Deepgram(os.getenv('DEEPGRAM_API_KEY'))
+   dg_client = Deepgram('261c65fb2d1608d4f9adbdc10d53f867e1d66957')
 
    async def get_transcript(self, data: Dict) -> None:
         if 'channel' in data:
