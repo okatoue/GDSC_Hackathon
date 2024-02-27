@@ -1,11 +1,8 @@
 # Live Transcription With Python and Django
 
-To run this project create a virtual environment by running the below commands.
+To run this project go to the directory that includes the stream folder you downloaded.
 ```
-mkdir [% NAME_OF_YOUR_DIRECTORY %]
-cd [% NAME_OF_YOUR_DIRECTORY %]
-python3 -m venv venv
-source venv/bin/activate
+cd [% NAME_OF_DIRECTORY %]
 ```
 Make sure your virtual environment is activated and install the dependencies in the requirements.txt file inside.
 
