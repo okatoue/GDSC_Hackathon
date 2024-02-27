@@ -50,12 +50,31 @@ $(document).ready(function() {
         }
 
     });
+    let hoverTimer;
+
     $('#transcript').on('mouseover', 'mark', function() {
         // This will be the word you're hovering over
-        const hoveredWord = $(this).text();
-        $('.custom-tooltip').text(hoveredWord).show();
+        const hoveredWord = $(this).text().trim();
+        clearTimeout(hoverTimer);
+        hoverTimer = setTimeout(() => {
+        // For a custom tooltip
+        $('.custom-tooltip').text(hoveredWord).css({
+            display: 'block',
+            // Optionally set position here if it's dynamic
+        });
+        // For default title attribute tooltip, uncomment below
+        // $(this).attr('title', hoveredWord);
+    }, 5000);
+
     }).on('mouseout', 'mark', function() {
-        // Hide the custom tooltip on mouse out
+        clearTimeout(hoverTimer);
         $('.custom-tooltip').hide();
+    });
+
+    $('#transcript').on('mousemove', 'mark', function(event) {
+        $('.custom-tooltip').css({
+            top: event.pageY + 10, // Position below the cursor
+            left: event.pageX + 10 // Position to the right of the cursor
+        });
     });
 });
