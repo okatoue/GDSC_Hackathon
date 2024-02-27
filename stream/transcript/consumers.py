@@ -4,9 +4,12 @@ from dotenv import load_dotenv
 from deepgram import Deepgram
 from typing import Dict
 from googletrans import Translator
-
+from django.core.cache import cache
 import os
 
+from_lang = 'en'
+
+# For home page
 class MyConsumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
         await self.accept()
@@ -14,11 +17,14 @@ class MyConsumer(AsyncJsonWebsocketConsumer):
     async def disconnect(self, close_code):
         pass
 
+    # Get drop box values
     async def receive_json(self, content, **kwargs):
-        dropdown1_value = content['dropdown1']
-        dropdown2_value = content['dropdown2']
-        print(dropdown1_value)
-        print(dropdown2_value)
+        from_lang = content['dropdown1'] 
+        dest_lang = content['dropdown2']
+        print(from_lang)
+        session_key = self.scope["session"].session_key
+        cache.set(f"{session_key}_from_lang", from_lang, timeout=3600)
+        cache.set(f"{session_key}_dest_lang", dest_lang, timeout=3600)
 
 load_dotenv()
 
@@ -32,16 +38,22 @@ class TranscriptConsumer(AsyncWebsocketConsumer):
             transcript = data['channel']['alternatives'][0]['transcript']
             if transcript:
                 print(transcript)
-                transcript = translator.translate(transcript, src="tr", dest="ar").text
-                print(transcript)
+                #translate before sending to js
+                session_key = self.scope["session"].session_key
+                from_lang = cache.get(f"{session_key}_from_lang", "auto")
+                dest_lang = cache.get(f"{session_key}_dest_lang", "en")
+                transcript = translator.translate(transcript, src="auto", dest=dest_lang).text
                 await self.send(transcript)
 
 
    async def connect_to_deepgram(self):
        try:
-           self.socket = await self.dg_client.transcription.live({'punctuate': True, 'interim_results': False})
-           self.socket.registerHandler(self.socket.event.CLOSE, lambda c: print(f'Connection closed with code {c}.'))
-           self.socket.registerHandler(self.socket.event.TRANSCRIPT_RECEIVED, self.get_transcript)
+            # set language and other perams
+            session_key = self.scope["session"].session_key
+            from_lang = cache.get(f"{session_key}_from_lang", "en")
+            self.socket = await self.dg_client.transcription.live({'model': "nova-2", 'punctuate': True, 'language': from_lang, 'interim_results': False})
+            self.socket.registerHandler(self.socket.event.CLOSE, lambda c: print(f'Connection closed with code {c}.'))
+            self.socket.registerHandler(self.socket.event.TRANSCRIPT_RECEIVED, self.get_transcript)
 
        except Exception as e:
            raise Exception(f'Could not open socket: {e}')
