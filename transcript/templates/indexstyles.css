@@ -1,0 +1,50 @@
+body {
+    background-color: black;
+    color: white;
+}
+
+p mark {
+    background:none;
+    font-family: Georgia, serif;
+    font-size: 100px;
+    letter-spacing: 2px;
+    word-spacing: 2px;
+    color: #FFFFFF;
+    font-weight: 700;
+    text-decoration: none solid rgb(68, 68, 68);
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+}
+.custom-tooltip {
+    display: none; /* Hidden by default */
+    position: absolute;
+    background-color: black;
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 10px;
+    /* Position it above the element */
+    z-index: 1000; /* Ensure it sits on top of other content */
+    font-size: 16px; /* Adjust based on your needs */
+}
+
+p mark:hover + .custom-tooltip {
+    display: block;
+    margin-top: -35px; /* Adjust based on your needs */
+}
+
+p mark:hover {
+    font-family: Georgia, serif;
+    font-size: 100px;
+    letter-spacing: 2px;
+    word-spacing: 2px;
+    color: #FFFFFF;
+    font-weight: 700;
+    text-decoration: none solid rgb(68, 68, 68);
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+    background:grey;
+    cursor:pointer;
+}
