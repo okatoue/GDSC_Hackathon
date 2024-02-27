@@ -8,11 +8,7 @@
         {
             "src": "/(.*)",
             "dest": "stream/wsgi.py"
-        },
-        {
-            "src": "/static/(.*)",
-            "dest": "/static/$1"
-          }
+        }
     ],
-    "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+    "rewrites": [{ "source": "/(.*)", "destination": "/home.html" }]
 }
