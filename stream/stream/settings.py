@@ -65,7 +65,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'stream.wsgi.application'
+WSGI_APPLICATION = 'stream.wsgi.app'
 
 
 # Database
