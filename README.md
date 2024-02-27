@@ -1,4 +1,4 @@
-[![https://i3.ytimg.com/vi/38Ol_aTdsw0/maxresdefault.jpg](https://youtu.be/38Ol_aTdsw0)](https://youtu.be/38Ol_aTdsw0)
+[![IMAGE ALT TEXT HERE](https://i3.ytimg.com/vi/38Ol_aTdsw0/maxresdefault.jpg)](https://youtu.be/38Ol_aTdsw0)
 
 To run this project create a virtual environment by running the below commands.
 
