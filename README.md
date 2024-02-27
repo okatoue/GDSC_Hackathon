@@ -1,3 +1,5 @@
+[![IMAGE ALT TEXT HERE](https://youtu.be/38Ol_aTdsw0)](https://youtu.be/38Ol_aTdsw0)
+
 To run this project create a virtual environment by running the below commands.
 
 ```
