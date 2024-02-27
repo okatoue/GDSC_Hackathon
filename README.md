@@ -1,7 +1,7 @@
-#Youtube Video:
+# Youtube Video:
 [![IMAGE ALT TEXT HERE](https://i3.ytimg.com/vi/38Ol_aTdsw0/maxresdefault.jpg)](https://youtu.be/38Ol_aTdsw0)
 
-#Setup:
+# Setup:
 To run this project create a virtual environment by running the below commands.
 
 ```
