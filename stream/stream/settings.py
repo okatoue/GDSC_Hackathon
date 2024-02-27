@@ -24,6 +24,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['.vercel.app']
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -65,7 +66,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'stream.wsgi.app'
+WSGI_APPLICATION = 'stream.wsgi.application'
 
 
 # Database
